@@ -1,0 +1,22 @@
+data = {
+  "1": {
+        "Physics": "61",
+        "Maths": "71",
+        "Chemistry": "81",
+  },
+  "2": {
+        "Physics": "62",
+        "Maths": "72",
+        "Chemistry": "82",
+  },
+  "3": {
+        "Physics": "63",
+        "Maths": "73",
+        "Chemistry": "83",
+  },
+  "4": {
+        "Physics": "64",
+        "Maths": "74",
+        "Chemistry": "84",
+  }
+}

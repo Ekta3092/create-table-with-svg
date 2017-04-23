@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+	<body>
+		<script src="data.json"></script>
+		<script>
+			var SVG=function(h,w){
+				 var NS="http://www.w3.org/2000/svg";
+				 var svg=document.createElementNS(NS,"svg");
+			
+				 svg.setAttribute("width",w);
+				 svg.setAttribute("height",h);
+				 return svg;
+				}
+
+			var svg=SVG("100%","100%");
+			document.body.appendChild(svg);
+			
+			var text=function(x,y,fill){
+				var NS="http://www.w3.org/2000/svg";
+				var SVGObj= document.createElementNS(NS,"text");
+
+				SVGObj.setAttribute("x",x);
+				SVGObj.setAttribute("y",y);
+				SVGObj.style.fill=fill;
+				return SVGObj;
+			}
+			
+			var tspan=function(x,y,fill){
+				var NS="http://www.w3.org/2000/svg";
+				var SVGObj= document.createElementNS(NS,"tspan");
+
+				SVGObj.setAttribute("x",x);
+				SVGObj.setAttribute("y",y);
+				SVGObj.style.fill=fill;
+				return SVGObj;
+			}
+			
+			var rect=function(h,w,x,y,fill){
+				var NS="http://www.w3.org/2000/svg";
+				var SVGObj= document.createElementNS(NS,"rect");
+				// SVGObj.width.baseVal.value=w;
+				 //SVGObj.height.baseVal.value=h;
+				SVGObj.setAttribute("height",h);
+				SVGObj.setAttribute("width",w);
+				SVGObj.setAttribute("x",x);
+				SVGObj.setAttribute("y",y);
+				SVGObj.style.stroke="black";
+				SVGObj.style.fill=fill;
+				return SVGObj;
+			}
+			
+			var text_x=0,text_y=25,tspan_x=0,tspan_y=25,temp_tspan_y,cell_height=20,cell_width=100;
+			var ss = {};
+			for (key1 in data) {
+				if(tspan_y == 25){
+					var m= rect(cell_height,cell_width,text_x,text_y-15,"#d9ffcc");
+					svg.appendChild(m);
+					var r= text(text_x,text_y,"black");
+					//console.log(key1);
+					r.innerHTML = "Roll No" ;
+					//console.log("1" + " " + text_x + " " + text_y);
+				}
+				temp_tspan_y = tspan_y;
+				for (key in data[key1]) {
+						tspan_x += cell_width;
+						text_x += cell_width;
+						console.log(key);
+						if(tspan_y == 25){
+							m= rect(cell_height,cell_width,text_x,text_y-15,"#d9ffcc");
+							svg.appendChild(m);
+							//console.log("2" + " " + text_x + " " + text_y + "   " + key);							
+							ss[key]= text(text_x,text_y,"black");
+							//console.log(key1);
+							ss[key].innerHTML = key ;
+						}
+						temp_tspan_y+=cell_height;
+						m= rect(cell_height,cell_width,tspan_x,temp_tspan_y-15,"#ffffcc");
+						svg.appendChild(m);
+						//console.log("3" + " " + tspan_x + " " + temp_tspan_y + "   " + data[key1][key]);
+						var q= tspan(tspan_x,temp_tspan_y,"black");
+						ss[key].appendChild(q);
+						ss[key].lastElementChild.innerHTML = data[key1][key] ;
+						temp_tspan_y -= cell_height;
+						svg.appendChild(ss[key]);
+				}
+				tspan_x=0,text_x=0;
+				tspan_y+=cell_height;
+				m= rect(cell_height,cell_width,tspan_x,tspan_y-15,"#ffffcc");
+				svg.appendChild(m);
+				//console.log("4" + " " + tspan_x + " " + tspan_y + "   " +key1);
+				var p= tspan(tspan_x,tspan_y,"black");
+				r.appendChild(p);
+				r.lastElementChild.innerHTML = key1 ;
+				svg.appendChild(r);
+			}
+		</script>
+	</body>
+</html>
